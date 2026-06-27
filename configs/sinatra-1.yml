@@ -1,0 +1,19 @@
+version: 1
+
+sources:
+  - id: sinatra
+    type: git
+    url: "https://github.com/sinatra/sinatra.git"
+    ref: "v4.2.1"
+    cloneDir: "../repos/sinatra"
+
+targets:
+  - id: "sinatra"
+    type: ruby
+    sourceId: "sinatra"
+    generation:
+      outputPath: "../sboms/sinatra.cdx.xml"
+      format: xml
+      specVersion: "1.1"
+    options:
+      path: "./Gemfile"

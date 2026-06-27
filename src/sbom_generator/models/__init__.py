@@ -10,11 +10,12 @@ from .configuration import (
     SourceLocal,
     TargetDocker,
     TargetNPM,
+    TargetRuby,
     TargetYarn,
 )
 
 SourceType: TypeAlias = SourceGit | SourceLocal | SourceDocker
-TargetType: TypeAlias = TargetDocker | TargetNPM | TargetYarn
+TargetType: TypeAlias = TargetDocker | TargetNPM | TargetYarn | TargetRuby
 
 __all__ = [
     'Configuration',
@@ -25,6 +26,7 @@ __all__ = [
     'SourceType',
     'TargetDocker',
     'TargetNPM',
+    'TargetRuby',
     'TargetType',
     'TargetYarn',
 ]

@@ -10,6 +10,7 @@ from sbom_generator.models import (
     SourceLocal,
     SourceType,
     TargetNPM,
+    TargetRuby,
     TargetType,
     TargetYarn,
 )
@@ -193,6 +194,57 @@ def _execute_target_yarn(
         )
 
 
+def _execute_target_ruby(
+    target: TargetRuby, source: SourceType, config_dir: Path
+) -> None:
+    assert isinstance(source, (SourceGit, SourceLocal))
+
+    if isinstance(source, SourceGit):
+        source_path: Final = config_dir / source.clone_dir
+    else:
+        source_path: Final = config_dir / source.path
+    manifest_path = source_path / target.options.path
+
+    if not manifest_path.is_file():
+        msg: Final = f"Configured manifest '{manifest_path!s}' in target '{target.id}' with source '{source.id}' is not an existing file!"
+        raise ValueError(msg)
+
+    subprocess.check_call(
+        ['bundle', 'install'],
+        cwd=manifest_path.parent,
+        stdout=subprocess.DEVNULL,
+    )
+
+    with TemporaryDirectory() as tmpdir:
+        shutil.copy(
+            (Path(str(files('sbom_generator') / 'deps' / 'ruby' / 'Gemfile'))),
+            tmpdir,
+        )
+
+        subprocess.check_call(
+            ['bundle', 'install', '--gemfile', 'Gemfile'],
+            cwd=tmpdir,
+            stdout=subprocess.DEVNULL,
+        )
+
+        subprocess.check_call(
+            [
+                'cyclonedx-ruby',
+                *(['--path', '.']),
+                '--verbose',
+            ],
+            cwd=manifest_path.parent,
+            stdout=subprocess.DEVNULL,
+        )
+
+    output_path: Final = (config_dir / target.generation.output_path).absolute()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.move(
+        manifest_path.parent / 'bom.xml',
+        output_path,
+    )
+
+
 def execute_targets(
     targets: list[TargetType], sources: list[SourceType], config_dir: Path
 ) -> None:
@@ -205,3 +257,5 @@ def execute_targets(
             _execute_target_npm(target, source, config_dir)
         elif isinstance(target, TargetYarn):
             _execute_target_yarn(target, source, config_dir)
+        elif isinstance(target, TargetRuby):
+            _execute_target_ruby(target, source, config_dir)

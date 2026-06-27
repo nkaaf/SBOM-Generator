@@ -21,22 +21,32 @@ updates:
         patterns:
           - "*"
 
-  - package-ecosystem: "npm"
+  - package-ecosystem: npm
     directory: "/src/sbom_generator/deps/npm"
     schedule:
-      interval: "daily"
+      interval: daily
     open-pull-requests-limit: 1
     groups:
       cyclonedx-npm-dependencies:
         patterns:
           - "*"
 
-  - package-ecosystem: "npm"
+  - package-ecosystem: npm
     directory: "/src/sbom_generator/deps/yarn"
     schedule:
-      interval: "daily"
+      interval: daily
     open-pull-requests-limit: 1
     groups:
       cyclonedx-yarn-dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: bundler
+    directory: "/src/sbom_generator/deps/ruby"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 1
+    groups:
+      cyclonedx-ruby-dependencies:
         patterns:
           - "*"

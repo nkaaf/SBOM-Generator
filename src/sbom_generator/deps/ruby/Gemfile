@@ -1,0 +1,2 @@
+source "https://rubygems.org"
+gem "cyclonedx-ruby", "= 1.1.0"

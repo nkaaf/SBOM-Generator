@@ -2,11 +2,9 @@
 #   filename:  generation-1.schema.json
 
 from __future__ import annotations
-
-from enum import Enum
 from typing import Annotated, Literal
-
 from pydantic import BaseModel, ConfigDict, Field
+from enum import Enum
 
 
 class SourceBase(BaseModel):
@@ -77,6 +75,15 @@ class Options1(BaseModel):
     """The path of the 'package.json' manifest, relative to source (root) path."""
     include_dev: Annotated[bool, Field(alias='includeDev')]
     main_type: Annotated[MainType, Field(alias='mainType')]
+
+
+class Options2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        populate_by_name=True,
+    )
+    path: Annotated[str, Field(min_length=1)]
+    """The path of the 'Gemfile' manifest, relative to source (root) path."""
 
 
 class SpecVersion(str, Enum):
@@ -226,11 +233,53 @@ class GenerationOptionsYarn7(GenerationOptionsYarn3, GenerationOptionsYarn4):
     )
 
 
+class GenerationOptionsRuby1(GenerationOptionsBase1):
+    pass
+
+
+class GenerationOptionsRuby2(GenerationOptionsBase2):
+    pass
+
+
+class GenerationOptionsRuby3(GenerationOptionsBase3):
+    pass
+
+
+class GenerationOptionsRuby4(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    format: Literal['xml']
+    spec_version: Annotated[Literal['1.1'], Field(alias='specVersion')]
+
+
+class GenerationOptionsRuby5(GenerationOptionsRuby1, GenerationOptionsRuby4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
+class GenerationOptionsRuby6(GenerationOptionsRuby2, GenerationOptionsRuby4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
+class GenerationOptionsRuby7(GenerationOptionsRuby3, GenerationOptionsRuby4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
 class OptionsNPM(Options):
     pass
 
 
 class OptionsYarn(Options1):
+    pass
+
+
+class OptionsRuby(Options2):
     pass
 
 
@@ -264,6 +313,15 @@ class TargetYarn(TargetBase):
     options: Options1
 
 
+class TargetRuby(TargetBase):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: Literal['ruby']
+    generation: GenerationOptionsRuby5 | GenerationOptionsRuby6 | GenerationOptionsRuby7
+    options: Options2
+
+
 class TargetDocker(TargetBase):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -280,4 +338,6 @@ class SBOMGenerationConfig(BaseModel):
     sources: Annotated[
         list[SourceGit | SourceLocal | SourceDocker], Field(min_length=1)
     ]
-    targets: Annotated[list[TargetNPM | TargetYarn | TargetDocker], Field(min_length=1)]
+    targets: Annotated[
+        list[TargetNPM | TargetYarn | TargetRuby | TargetDocker], Field(min_length=1)
+    ]
