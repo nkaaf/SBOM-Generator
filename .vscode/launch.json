@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "SBOM Generator - Validate",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "sbom_generator.main",
+            "args": [
+                "validate",
+                "configs/pangolin-1.yml"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "justMyCode": true
+        },
+        {
+            "name": "SBOM Generator - Generate",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "sbom_generator.main",
+            "args": [
+                "generate",
+                "configs/pangolin-1.yml"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "justMyCode": true
+        }
+    ]
+}

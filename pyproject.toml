@@ -1,0 +1,99 @@
+[project]
+name = "sbom-generator"
+version = "0.1.0"
+description = "Configuration-based SBom Generator"
+readme = "README.md"
+authors = [
+    { name = "Niklas Kaaf", email = "nkaaf@protonmail.com" }
+]
+maintainers = [
+    { name = "Niklas Kaaf", email = "nkaaf@protonmail.com" }
+]
+requires-python = ">=3.10,<3.15"
+dependencies = [
+    "gitpython>=3.1.50",
+    "jsonschema>=4.26.0",
+    "pydantic>=2.13.4",
+    "pyyaml>=6.0.3",
+    "typer>=0.26.7",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Typing :: Typed"
+]
+
+[project.urls]
+homepage = "https://github.com/nkaaf/SBOM-Generator"
+source = "https://github.com/nkaaf/SBOM-Generator"
+issues = "https://github.com/nkaaf/SBOM-Generator/issues"
+
+[project.scripts]
+sbom-generator = "sbom_generator.main:app"
+
+[dependency-groups]
+build = [
+    "uv-build>=0.11.24",
+]
+generation = [
+    "datamodel-code-generator>=0.66.0",
+]
+dev = [
+    "ruff>=0.15.19",
+    "ty>=0.0.53",
+    "uv>=0.11.24",
+    { include-group = "build" },
+    { include-group = "generation" },
+]
+
+[build-system]
+requires = ["uv_build>=0.11.24,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = true
+
+[tool.uv.build-backend]
+source-include = [
+"src/sbom_generator/schemas/*.schema.json",
+"src/sbom_generator/deps/*"
+]
+
+[tool.ty.rules]
+all = "error"
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["COM812"]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.datamodel-codegen]
+formatters = ["ruff-format"]
+input = "src/sbom_generator/schemas/generation-1.schema.json"
+input_file_type = "jsonschema"
+output = "src/sbom_generator/models/configuration.py"
+preset = "practical-py310-20260619"

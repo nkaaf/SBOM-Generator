@@ -1,0 +1,30 @@
+{
+	"name": "SBOM",
+	"image": "mcr.microsoft.com/devcontainers/base",
+	"features": {
+		"ghcr.io/devcontainers/features/node:2": {},
+		"ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers-extra/features/ruff:2": {
+			"version": "0.15.19"
+		},
+		"ghcr.io/devcontainers-extra/features/ty:1": {
+			"version": "0.0.53"
+		},
+		"ghcr.io/devcontainers-extra/features/uv:1": {
+			"version": "0.11.24"
+		},
+		"ghcr.io/devcontainers-extra/features/yamllint:2": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.vscode-yaml"
+			],
+			"settings": {
+				"yaml.schemas": {
+					"src/sbom_generator/schemas/generation-1.schema.json": "configs/*-1.{yml,yaml}"
+				}
+			}
+		}
+	}
+}

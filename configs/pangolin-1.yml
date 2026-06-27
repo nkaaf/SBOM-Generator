@@ -1,0 +1,57 @@
+version: 1
+
+sources:
+  - id: pangolin
+    type: git
+    url: "https://github.com/fosrl/pangolin.git"
+    ref: "1.19.4"
+    cloneDir: "../repos/pangolin"
+  #- id: pangolin
+  #  type: local
+  #  path: "../repos/pangolin"
+
+targets:
+  - id: "server"
+    type: npm
+    sourceId: "pangolin"
+    generation:
+      outputPath: "../sboms/server.cdx.json"
+      format: json
+      specVersion: "1.6"
+    options:
+      includeDev: false
+      includeOptional: true
+      includePeer: true
+      flatten: false
+      path: "./package.json"
+      lockOnly: true
+      mainType: application
+
+  - id: "server-lock"
+    type: npm
+    sourceId: "pangolin"
+    generation:
+      outputPath: "../sboms/server-lock.cdx.json"
+      format: json
+      specVersion: "1.6"
+    options:
+      includeDev: false
+      includeOptional: true
+      includePeer: true
+      flatten: false
+      path: "./package.json"
+      lockOnly: true
+      mainType: application
+
+  #- id: "prod-image"
+  #  generation:
+  #    format: "json"
+  #    specVersion: "1.7"
+  #  type: "docker"
+  #  path: "."
+  #  options:
+  #    dockerfile: "Dockerfile"
+  #    imageName: "myapp:prod"
+  #    platform: "linux/amd64"
+  #  output:
+  #    file: "image.cdx.json"
