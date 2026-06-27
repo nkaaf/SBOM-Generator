@@ -26,5 +26,6 @@
 				}
 			}
 		}
-	}
+	},
+	"postCreateCommand": "sh .devcontainer/setup.sh"
 }
