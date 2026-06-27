@@ -71,8 +71,8 @@ package = true
 
 [tool.uv.build-backend]
 source-include = [
-"src/sbom_generator/schemas/*.schema.json",
-"src/sbom_generator/deps/*"
+    "src/sbom_generator/schemas/*.schema.json",
+    "src/sbom_generator/deps/*"
 ]
 
 [tool.ty.rules]
