@@ -19,6 +19,7 @@ def validate_target(
 
     source_ids: Final = [source.id for source in sources]
 
+    linked_sources: Final[list[str]] = []
     for target in targets:
         if target.source_id not in source_ids:
             msg = f"Source with ID '{target.source_id}' in target '{target.id}' is not found!"
@@ -28,3 +29,9 @@ def validate_target(
         if target_path.parent.exists() and not target_path.parent.is_dir():
             msg: Final = f"Configured output directory '{target_path.parent!s}' exists, but is not a directory!"
             raise ValueError(msg)
+
+        linked_sources.append(target.source_id)
+
+    if len(sources) != len(set(linked_sources)):
+        msg: Final = f"Following sources are configured, but are not linked by enabled nor disabled targets: '{[source.id for source in sources if source.id not in set(linked_sources)]}'"
+        raise ValueError(msg)

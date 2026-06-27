@@ -1,3 +1,4 @@
+from collections import Counter
 from pathlib import Path
 from typing import Final
 
@@ -29,5 +30,5 @@ def validate_source(sources: list[SourceType], config_dir: Path) -> None:
             paths.append(path.resolve())
 
     if len(paths) != len(set(paths)):
-        msg: Final = f"Multiple equal source paths found: '{[path for path in paths if path not in set(paths)]}'"
+        msg: Final = f"Multiple equal source paths found: '{[str(k.absolute().resolve()) for k, v in Counter(paths).items() if v > 1]}'"
         raise ValueError(msg)

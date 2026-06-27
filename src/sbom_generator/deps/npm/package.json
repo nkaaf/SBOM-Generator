@@ -1,5 +1,4 @@
 {
-  "private": true,
   "dependencies": {
     "@cyclonedx/cyclonedx-npm": "5.0.0"
   }
