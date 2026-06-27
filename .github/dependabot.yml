@@ -30,3 +30,13 @@ updates:
       cyclonedx-npm-dependencies:
         patterns:
           - "*"
+
+  - package-ecosystem: "npm"
+    directory: "/src/sbom_generator/deps/yarn"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 1
+    groups:
+      cyclonedx-yarn-dependencies:
+        patterns:
+          - "*"

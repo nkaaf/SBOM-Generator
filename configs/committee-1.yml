@@ -1,0 +1,33 @@
+version: 1
+
+sources:
+  - id: committee
+    type: git
+    url: "https://github.com/yarnpkg/committee.git"
+    ref: "ded007b4175473d18197da63ba9e8658df491fa9"
+    cloneDir: "../repos/committee"
+
+targets:
+  - id: "committee"
+    type: yarn
+    sourceId: "committee"
+    generation:
+      outputPath: "../sboms/committee.cdx.json"
+      format: json
+      specVersion: "1.7"
+    options:
+      includeDev: false
+      path: "./package.json"
+      mainType: application
+
+  - id: "committee-dev"
+    type: yarn
+    sourceId: "committee"
+    generation:
+      outputPath: "../sboms/committee-dev.cdx.json"
+      format: json
+      specVersion: "1.7"
+    options:
+      includeDev: true
+      path: "./package.json"
+      mainType: application

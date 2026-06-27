@@ -97,3 +97,4 @@ input = "src/sbom_generator/schemas/generation-1.schema.json"
 input_file_type = "jsonschema"
 output = "src/sbom_generator/models/configuration.py"
 preset = "practical-py310-20260619"
+collapse_reuse_models = false

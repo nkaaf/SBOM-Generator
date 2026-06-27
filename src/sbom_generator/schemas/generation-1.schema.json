@@ -41,6 +41,9 @@
             "$ref": "#/$defs/targetNPM"
           },
           {
+            "$ref": "#/$defs/targetYarn"
+          },
+          {
             "$ref": "#/$defs/targetDocker"
           }
         ]
@@ -217,6 +220,32 @@
         }
       ]
     },
+    "targetYarn": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/targetBase"
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "options",
+            "generation"
+          ],
+          "properties": {
+            "type": {
+              "const": "yarn"
+            },
+            "generation": {
+              "$ref": "#/$defs/generationOptionsYarn"
+            },
+            "options": {
+              "$ref": "#/$defs/optionsYarn"
+            }
+          }
+        }
+      ]
+    },
     "targetDocker": {
       "allOf": [
         {
@@ -340,6 +369,37 @@
         }
       ]
     },
+    "generationOptionsYarn": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/generationOptionsBase"
+        },
+        {
+          "required": [
+            "format",
+            "specVersion"
+          ],
+          "properties": {
+            "format": {
+              "enum": [
+                "json",
+                "xml"
+              ]
+            },
+            "specVersion": {
+              "enum": [
+                "1.2",
+                "1.3",
+                "1.4",
+                "1.5",
+                "1.6",
+                "1.7"
+              ]
+            }
+          }
+        }
+      ]
+    },
     "optionsNPM": {
       "type": "object",
       "additionalProperties": false,
@@ -372,6 +432,32 @@
           "type": "boolean"
         },
         "flatten": {
+          "type": "boolean"
+        },
+        "mainType": {
+          "enum": [
+            "application",
+            "firmware",
+            "library"
+          ]
+        }
+      }
+    },
+    "optionsYarn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "includeDev",
+        "mainType"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The path of the 'package.json' manifest, relative to source (root) path."
+        },
+        "includeDev": {
           "type": "boolean"
         },
         "mainType": {

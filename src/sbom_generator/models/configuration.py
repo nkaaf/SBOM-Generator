@@ -68,6 +68,17 @@ class Options(BaseModel):
     main_type: Annotated[MainType, Field(alias='mainType')]
 
 
+class Options1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        populate_by_name=True,
+    )
+    path: Annotated[str, Field(min_length=1)]
+    """The path of the 'package.json' manifest, relative to source (root) path."""
+    include_dev: Annotated[bool, Field(alias='includeDev')]
+    main_type: Annotated[MainType, Field(alias='mainType')]
+
+
 class SpecVersion(str, Enum):
     field_1_0 = '1.0'
     field_1_1 = '1.1'
@@ -177,7 +188,49 @@ class GenerationOptionsNPM7(GenerationOptionsNPM3, GenerationOptionsNPM4):
     )
 
 
+class GenerationOptionsYarn1(GenerationOptionsBase1):
+    pass
+
+
+class GenerationOptionsYarn2(GenerationOptionsBase2):
+    pass
+
+
+class GenerationOptionsYarn3(GenerationOptionsBase3):
+    pass
+
+
+class GenerationOptionsYarn4(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    format: Format
+    spec_version: Annotated[SpecVersion1, Field(alias='specVersion')]
+
+
+class GenerationOptionsYarn5(GenerationOptionsYarn1, GenerationOptionsYarn4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
+class GenerationOptionsYarn6(GenerationOptionsYarn2, GenerationOptionsYarn4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
+class GenerationOptionsYarn7(GenerationOptionsYarn3, GenerationOptionsYarn4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
 class OptionsNPM(Options):
+    pass
+
+
+class OptionsYarn(Options1):
     pass
 
 
@@ -202,6 +255,15 @@ class TargetNPM(TargetBase):
     options: Options
 
 
+class TargetYarn(TargetBase):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: Literal['yarn']
+    generation: GenerationOptionsYarn5 | GenerationOptionsYarn6 | GenerationOptionsYarn7
+    options: Options1
+
+
 class TargetDocker(TargetBase):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -218,4 +280,4 @@ class SBOMGenerationConfig(BaseModel):
     sources: Annotated[
         list[SourceGit | SourceLocal | SourceDocker], Field(min_length=1)
     ]
-    targets: Annotated[list[TargetNPM | TargetDocker], Field(min_length=1)]
+    targets: Annotated[list[TargetNPM | TargetYarn | TargetDocker], Field(min_length=1)]

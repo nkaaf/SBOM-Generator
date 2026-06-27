@@ -16,9 +16,7 @@ def execute_source(source: SourceType, config_dir: Path) -> None:
         return
 
     if isinstance(source, SourceGit):
-        path: Final = (
-            config_dir / source.clone_dir
-        )  # ).resolve() # Resolve, because Repo.clone_from cannot handle relative paths
+        path: Final = config_dir / source.clone_dir
         if path.is_dir():
             shutil.rmtree(path)
 

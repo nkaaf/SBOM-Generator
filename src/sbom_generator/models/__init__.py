@@ -10,10 +10,11 @@ from .configuration import (
     SourceLocal,
     TargetDocker,
     TargetNPM,
+    TargetYarn,
 )
 
 SourceType: TypeAlias = SourceGit | SourceLocal | SourceDocker
-TargetType: TypeAlias = TargetDocker | TargetNPM
+TargetType: TypeAlias = TargetDocker | TargetNPM | TargetYarn
 
 __all__ = [
     'Configuration',
@@ -25,4 +26,5 @@ __all__ = [
     'TargetDocker',
     'TargetNPM',
     'TargetType',
+    'TargetYarn',
 ]
