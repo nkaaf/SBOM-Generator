@@ -8,7 +8,7 @@
             "module": "sbom_generator.main",
             "args": [
                 "validate",
-                "configs/pangolin-1.yml"
+                "configs/npm-1.yml"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
@@ -21,7 +21,7 @@
             "module": "sbom_generator.main",
             "args": [
                 "generate",
-                "configs/pangolin-1.yml"
+                "configs/npm-1.yml"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
@@ -34,7 +34,7 @@
             "module": "sbom_generator.main",
             "args": [
                 "validate",
-                "configs/committee-1.yml"
+                "configs/yarn-1.yml"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
@@ -47,7 +47,7 @@
             "module": "sbom_generator.main",
             "args": [
                 "generate",
-                "configs/committee-1.yml"
+                "configs/yarn-1.yml"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
@@ -60,7 +60,7 @@
             "module": "sbom_generator.main",
             "args": [
                 "validate",
-                "configs/sinatra-1.yml"
+                "configs/ruby-1.yml"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
@@ -73,7 +73,7 @@
             "module": "sbom_generator.main",
             "args": [
                 "generate",
-                "configs/sinatra-1.yml"
+                "configs/ruby-1.yml"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
