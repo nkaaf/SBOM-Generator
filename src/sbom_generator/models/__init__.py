@@ -1,30 +1,27 @@
 from typing import TypeAlias
 
 from .configuration import (
-    SBOMGenerationConfig as Configuration,
+    SBOMGenerationConfig as Configuration, TargetEsbuild,
 )
 from .configuration import (
     SourceBase,
-    SourceDocker,
     SourceGit,
     SourceLocal,
-    TargetDocker,
     TargetNPM,
     TargetRuby,
     TargetYarn,
 )
 
-SourceType: TypeAlias = SourceGit | SourceLocal | SourceDocker
-TargetType: TypeAlias = TargetDocker | TargetNPM | TargetYarn | TargetRuby
+SourceType: TypeAlias = SourceGit | SourceLocal
+TargetType: TypeAlias = TargetNPM | TargetYarn | TargetRuby | TargetEsbuild
 
 __all__ = [
     'Configuration',
     'SourceBase',
-    'SourceDocker',
     'SourceGit',
     'SourceLocal',
     'SourceType',
-    'TargetDocker',
+    'TargetEsbuild',
     'TargetNPM',
     'TargetRuby',
     'TargetType',

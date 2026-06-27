@@ -6,9 +6,6 @@ sources:
     url: "https://github.com/fosrl/pangolin.git"
     ref: "1.19.4"
     cloneDir: "../repos/pangolin"
-  #- id: pangolin
-  #  type: local
-  #  path: "../repos/pangolin"
 
 targets:
   - id: "server"
@@ -42,16 +39,3 @@ targets:
       path: "./package.json"
       lockOnly: true
       mainType: application
-
-  #- id: "prod-image"
-  #  generation:
-  #    format: "json"
-  #    specVersion: "1.7"
-  #  type: "docker"
-  #  path: "."
-  #  options:
-  #    dockerfile: "Dockerfile"
-  #    imageName: "myapp:prod"
-  #    platform: "linux/amd64"
-  #  output:
-  #    file: "image.cdx.json"

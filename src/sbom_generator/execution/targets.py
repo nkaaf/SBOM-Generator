@@ -12,7 +12,7 @@ from sbom_generator.models import (
     TargetNPM,
     TargetRuby,
     TargetType,
-    TargetYarn,
+    TargetYarn, TargetEsbuild,
 )
 
 from .sources import execute_source
@@ -245,6 +245,80 @@ def _execute_target_ruby(
     )
 
 
+def _execute_target_esbuild(
+    target: TargetEsbuild, source: SourceType, config_dir: Path
+) -> None:
+    assert isinstance(source, (SourceGit, SourceLocal))
+
+    if isinstance(source, SourceGit):
+        source_path: Final = config_dir / source.clone_dir
+    else:
+        source_path: Final = config_dir / source.path
+    manifest_path = source_path / target.options.path
+
+    if not manifest_path.is_file():
+        msg: Final = f"Configured metadata file '{manifest_path!s}' in target '{target.id}' with source '{source.id}' is not an existing file!"
+        raise ValueError(msg)
+
+    #if not target.options.lock_only:
+    #    node_modules_dir: Final = manifest_path.parent / 'node_modules'
+    #    if node_modules_dir.is_dir():
+    #        shutil.rmtree(node_modules_dir)
+#
+    #    subprocess.check_call(
+    #        [
+    #            'npm',
+    #            'install',
+    #            '.',
+    #            *(['--omit=dev'] if not target.options.include_dev else []),
+    #            *(['--omit=peer'] if not target.options.include_peer else []),
+    #            *(['--omit=optional'] if not target.options.include_optional else []),
+    #        ],
+    #        cwd=manifest_path.parent,
+    #        stdout=subprocess.DEVNULL,
+    #    )
+
+    with TemporaryDirectory() as tmpdir:
+        shutil.copy(
+            (Path(str(files('sbom_generator') / 'deps' / 'esbuild' / 'package.json'))),
+            tmpdir,
+        )
+
+        subprocess.check_call(
+            ['npm', 'install'],
+            cwd=tmpdir,
+            stdout=subprocess.DEVNULL,
+        )
+
+        subprocess.check_call(
+            [
+                'npx',
+                '--',
+                'cyclonedx-esbuild',
+                *(["--build-working-dir", manifest_path.parent]),
+                *(['--spec-version', target.generation.spec_version.value]),
+                '--output-reproducible',
+                *(
+                    [
+                        '--output-file',
+                        str(
+                            (config_dir / target.generation.output_path)
+                            .absolute()
+                            .resolve()
+                        ),
+                    ]
+                ),  # Resolve, for understandable output logging
+                '--validate',
+                *(['--mc-type', target.options.main_type.value]),
+                '--verbose',
+                '--',
+                manifest_path,
+            ],
+            cwd=tmpdir,
+            stdout=subprocess.DEVNULL,
+        )
+
+
 def execute_targets(
     targets: list[TargetType], sources: list[SourceType], config_dir: Path
 ) -> None:
@@ -259,3 +333,5 @@ def execute_targets(
             _execute_target_yarn(target, source, config_dir)
         elif isinstance(target, TargetRuby):
             _execute_target_ruby(target, source, config_dir)
+        elif isinstance(target, TargetEsbuild):
+            _execute_target_esbuild(target, source, config_dir)

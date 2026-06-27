@@ -35,15 +35,6 @@ class SourceLocal(SourceBase):
     """Relative path to directory of configuration file."""
 
 
-class SourceDocker(SourceBase):
-    model_config = ConfigDict(
-        populate_by_name=True,
-    )
-    type: Literal['docker']
-    image: Annotated[str, Field(min_length=1)]
-    tag: Annotated[str, Field(min_length=1)]
-
-
 class MainType(Enum):
     application = 'application'
     firmware = 'firmware'
@@ -84,6 +75,16 @@ class Options2(BaseModel):
     )
     path: Annotated[str, Field(min_length=1)]
     """The path of the 'Gemfile' manifest, relative to source (root) path."""
+
+
+class Options3(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        populate_by_name=True,
+    )
+    path: Annotated[str, Field(min_length=1)]
+    """The path of the esbuild-compatible metadata file, relative to source (root) path."""
+    main_type: Annotated[MainType, Field(alias='mainType')]
 
 
 class SpecVersion(str, Enum):
@@ -271,6 +272,44 @@ class GenerationOptionsRuby7(GenerationOptionsRuby3, GenerationOptionsRuby4):
     )
 
 
+class GenerationOptionsEsbuild1(GenerationOptionsBase1):
+    pass
+
+
+class GenerationOptionsEsbuild2(GenerationOptionsBase2):
+    pass
+
+
+class GenerationOptionsEsbuild3(GenerationOptionsBase3):
+    pass
+
+
+class GenerationOptionsEsbuild4(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    format: Literal['json']
+    spec_version: Annotated[SpecVersion1, Field(alias='specVersion')]
+
+
+class GenerationOptionsEsbuild5(GenerationOptionsEsbuild1, GenerationOptionsEsbuild4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
+class GenerationOptionsEsbuild6(GenerationOptionsEsbuild2, GenerationOptionsEsbuild4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
+class GenerationOptionsEsbuild7(GenerationOptionsEsbuild3, GenerationOptionsEsbuild4):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+
+
 class OptionsNPM(Options):
     pass
 
@@ -280,6 +319,10 @@ class OptionsYarn(Options1):
 
 
 class OptionsRuby(Options2):
+    pass
+
+
+class OptionsEsbuild(Options3):
     pass
 
 
@@ -322,11 +365,17 @@ class TargetRuby(TargetBase):
     options: Options2
 
 
-class TargetDocker(TargetBase):
+class TargetEsbuild(TargetBase):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    type: Literal['docker']
+    type: Literal['esbuild']
+    generation: (
+        GenerationOptionsEsbuild5
+        | GenerationOptionsEsbuild6
+        | GenerationOptionsEsbuild7
+    )
+    options: Options3
 
 
 class SBOMGenerationConfig(BaseModel):
@@ -335,9 +384,7 @@ class SBOMGenerationConfig(BaseModel):
         populate_by_name=True,
     )
     version: Literal[1]
-    sources: Annotated[
-        list[SourceGit | SourceLocal | SourceDocker], Field(min_length=1)
-    ]
+    sources: Annotated[list[SourceGit | SourceLocal], Field(min_length=1)]
     targets: Annotated[
-        list[TargetNPM | TargetYarn | TargetRuby | TargetDocker], Field(min_length=1)
+        list[TargetNPM | TargetYarn | TargetRuby | TargetEsbuild], Field(min_length=1)
     ]
