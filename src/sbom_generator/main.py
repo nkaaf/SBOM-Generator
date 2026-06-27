@@ -8,7 +8,7 @@ import jsonschema
 import yaml
 from typer import Argument, Typer
 
-from .execution import execute_sources, execute_targets
+from .execution import execute_targets
 from .models import Configuration
 from .validation import validate_source, validate_target
 
@@ -51,7 +51,6 @@ def validate(
         configuration,
         json.load(schema_file.open('r', encoding='utf-8')),
     )
-    logger.info('Configuration is valid!')
 
     sbom_configuration = Configuration.model_validate(configuration)
 
@@ -59,6 +58,8 @@ def validate(
     validate_target(
         sbom_configuration.targets, sbom_configuration.sources, config_path.parent
     )
+
+    logger.info('Configuration is valid!')
 
     return sbom_configuration
 
@@ -73,7 +74,6 @@ def generate(
 
     configuration: Final = validate(config_path)
 
-    execute_sources(configuration.sources, config_path.parent)
     execute_targets(configuration.targets, configuration.sources, config_path.parent)
 
 

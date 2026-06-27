@@ -13,6 +13,8 @@ from sbom_generator.models import (
     TargetType,
 )
 
+from .sources import execute_source
+
 __all__ = ['execute_targets']
 
 
@@ -105,11 +107,12 @@ def _execute_target_npm(
 
 
 def execute_targets(
-    targets: list[TargetType], sources: list[SourceType], config_path: Path
+    targets: list[TargetType], sources: list[SourceType], config_dir: Path
 ) -> None:
     for target in targets:
         source: Final = next(
             source for source in sources if source.id == target.source_id
         )
+        execute_source(source, config_dir)
         if isinstance(target, TargetNPM):
-            _execute_target_npm(target, source, config_path)
+            _execute_target_npm(target, source, config_dir)

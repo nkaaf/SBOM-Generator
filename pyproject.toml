@@ -1,7 +1,7 @@
 [project]
 name = "sbom-generator"
 version = "0.1.0"
-description = "Configuration-based SBom Generator"
+description = "Configuration-based SBOM Generator"
 readme = "README.md"
 authors = [
     { name = "Niklas Kaaf", email = "nkaaf@protonmail.com" }
