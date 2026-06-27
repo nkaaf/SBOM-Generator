@@ -74,7 +74,8 @@ def generate(
 
     configuration: Final = validate(config_path)
 
-    execute_targets(configuration.targets, configuration.sources, config_path.parent)
+    enabled_targets = [target for target in configuration.targets if target.enabled]
+    execute_targets(enabled_targets, configuration.sources, config_path.parent)
 
 
 if __name__ == '__main__':
