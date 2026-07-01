@@ -49,21 +49,21 @@ sbom-generator = "sbom_generator.main:app"
 
 [dependency-groups]
 build = [
-    "uv-build>=0.11.24",
+    "uv-build>=0.11.26",
 ]
 generation = [
-    "datamodel-code-generator>=0.66.0",
+    "datamodel-code-generator>=0.66.3",
 ]
 dev = [
     "ruff>=0.15.19",
-    "ty>=0.0.53",
-    "uv>=0.11.24",
+    "ty>=0.0.56",
+    "uv>=0.11.26",
     { include-group = "build" },
     { include-group = "generation" },
 ]
 
 [build-system]
-requires = ["uv_build>=0.11.24,<0.12.0"]
+requires = ["uv_build>=0.11.26,<0.12.0"]
 build-backend = "uv_build"
 
 [tool.uv]
