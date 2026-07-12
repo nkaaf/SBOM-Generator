@@ -9,13 +9,14 @@ authors = [
 maintainers = [
     { name = "Niklas Kaaf", email = "nkaaf@protonmail.com" }
 ]
+license-files = ["LICENSE"]
 requires-python = ">=3.10,<3.15"
 dependencies = [
-    "gitpython>=3.1.50",
-    "jsonschema>=4.26.0",
-    "pydantic>=2.13.4",
-    "pyyaml>=6.0.3",
-    "typer>=0.26.7",
+    "gitpython==3.1.50",
+    "jsonschema==4.26.0",
+    "pydantic==2.13.4",
+    "pyyaml==6.0.3",
+    "typer==0.26.8",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -33,7 +34,6 @@ classifiers = [
     "Topic :: Software Development :: Quality Assurance",
     "Topic :: System :: Systems Administration",
     "Topic :: Utilities",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
     "Environment :: Console",
     "Typing :: Typed"
@@ -49,25 +49,26 @@ sbom-generator = "sbom_generator.main:app"
 
 [dependency-groups]
 build = [
-    "uv-build>=0.11.28",
+    "uv-build==0.11.28",
 ]
 generation = [
-    "datamodel-code-generator>=0.68.1",
+    "datamodel-code-generator==0.68.1",
 ]
 dev = [
-    "ruff>=0.15.21",
-    "ty>=0.0.58",
-    "uv>=0.11.28",
+    "ruff==0.15.21",
+    "ty==0.0.58",
+    "uv==0.11.28",
     { include-group = "build" },
     { include-group = "generation" },
 ]
 
 [build-system]
-requires = ["uv_build>=0.11.28,<0.12.0"]
+requires = ["uv_build==0.11.28"]
 build-backend = "uv_build"
 
 [tool.uv]
 package = true
+add-bounds = "exact"
 
 [tool.uv.build-backend]
 source-include = [

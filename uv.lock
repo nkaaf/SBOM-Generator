@@ -936,23 +936,23 @@ generation = [
 
 [package.metadata]
 requires-dist = [
-    { name = "gitpython", specifier = ">=3.1.50" },
-    { name = "jsonschema", specifier = ">=4.26.0" },
-    { name = "pydantic", specifier = ">=2.13.4" },
-    { name = "pyyaml", specifier = ">=6.0.3" },
-    { name = "typer", specifier = ">=0.26.7" },
+    { name = "gitpython", specifier = "==3.1.50" },
+    { name = "jsonschema", specifier = "==4.26.0" },
+    { name = "pydantic", specifier = "==2.13.4" },
+    { name = "pyyaml", specifier = "==6.0.3" },
+    { name = "typer", specifier = "==0.26.8" },
 ]
 
 [package.metadata.requires-dev]
-build = [{ name = "uv-build", specifier = ">=0.11.28" }]
+build = [{ name = "uv-build", specifier = "==0.11.28" }]
 dev = [
-    { name = "datamodel-code-generator", specifier = ">=0.68.1" },
-    { name = "ruff", specifier = ">=0.15.21" },
-    { name = "ty", specifier = ">=0.0.58" },
-    { name = "uv", specifier = ">=0.11.28" },
-    { name = "uv-build", specifier = ">=0.11.28" },
+    { name = "datamodel-code-generator", specifier = "==0.68.1" },
+    { name = "ruff", specifier = "==0.15.21" },
+    { name = "ty", specifier = "==0.0.58" },
+    { name = "uv", specifier = "==0.11.28" },
+    { name = "uv-build", specifier = "==0.11.28" },
 ]
-generation = [{ name = "datamodel-code-generator", specifier = ">=0.68.1" }]
+generation = [{ name = "datamodel-code-generator", specifier = "==0.68.1" }]
 
 [[package]]
 name = "shellingham"
