@@ -16,6 +16,10 @@
 		"ghcr.io/devcontainers-extra/features/yamllint:2": {},
 		"ghcr.io/devcontainers/features/ruby:2": {}
 	},
+	"containerEnv": {
+		"UV_CACHE_DIR": ".uv_cache",
+		"UV_PYTHON_CACHE_DIR": ".uv_cache"
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -28,5 +32,5 @@
 			}
 		}
 	},
-	"postCreateCommand": "sh .devcontainer/setup.sh"
+	"postAttachCommand": "sh .devcontainer/setup.sh"
 }

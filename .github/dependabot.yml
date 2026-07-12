@@ -5,7 +5,6 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-    open-pull-requests-limit: 1
     groups:
       devcontainers-dependencies:
         patterns:
@@ -15,7 +14,6 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-    open-pull-requests-limit: 1
     groups:
       python-dependencies:
         patterns:
@@ -25,7 +23,6 @@ updates:
     directory: "/src/sbom_generator/deps/npm"
     schedule:
       interval: daily
-    open-pull-requests-limit: 1
     groups:
       cyclonedx-npm-dependencies:
         patterns:
@@ -35,7 +32,6 @@ updates:
     directory: "/src/sbom_generator/deps/yarn"
     schedule:
       interval: daily
-    open-pull-requests-limit: 1
     groups:
       cyclonedx-yarn-dependencies:
         patterns:
@@ -45,7 +41,6 @@ updates:
     directory: "/src/sbom_generator/deps/esbuild"
     schedule:
       interval: daily
-    open-pull-requests-limit: 1
     groups:
       cyclonedx-esbuild-dependencies:
         patterns:
@@ -55,7 +50,6 @@ updates:
     directory: "/src/sbom_generator/deps/ruby"
     schedule:
       interval: daily
-    open-pull-requests-limit: 1
     groups:
       cyclonedx-ruby-dependencies:
         patterns:
