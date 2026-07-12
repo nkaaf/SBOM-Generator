@@ -129,15 +129,6 @@ wheels = [
 ]
 
 [[package]]
-name = "ddt"
-version = "1.7.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/51/d4/bdea45c5c1f1f0ae55844d841101b00905c9863ee1004da37d911253abb2/ddt-1.7.2.tar.gz", hash = "sha256:d215d6b083963013c4a19b1e4dcd6a96e80e43ab77519597a6acfcf2e9a3e04b", size = 13673, upload-time = "2024-02-26T01:36:33.737Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/61/7c/38d1aec205833096eddefcbb3492fbb2c886e74174c72bc160da9522b2f0/ddt-1.7.2-py2.py3-none-any.whl", hash = "sha256:6adcfaf9785f0a36f9e73a89b91e412de9ef8649e289b750e3683bc79d5e2354", size = 7065, upload-time = "2024-02-26T01:36:32.45Z" },
-]
-
-[[package]]
 name = "genson"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -159,29 +150,15 @@ wheels = [
 ]
 
 [[package]]
-name = "gitdb2"
-version = "4.0.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "gitdb" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/97/97/6ad081c9f3efa1545fd11149f14602a53e2003c153312c8bfa825ba27b89/gitdb2-4.0.2.tar.gz", hash = "sha256:0986cb4003de743f2b3aba4c828edd1ab58ce98e1c4a8acf72ef02760d4beb4e", size = 949, upload-time = "2020-02-23T15:47:58.865Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/52/7e/59f96b47f671b3fe0aa0c1b609531a540434b719a10c417581e25b383909/gitdb2-4.0.2-py3-none-any.whl", hash = "sha256:a1c974e5fab8c2c90192c1367c81cbc54baec04244bda1816e9c8ab377d1cba3", size = 1137, upload-time = "2020-02-23T15:47:57.704Z" },
-]
-
-[[package]]
 name = "gitpython"
-version = "3.0.0"
+version = "3.1.50"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ddt" },
     { name = "gitdb" },
-    { name = "gitdb2" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/da/87/9dbf6d3d2a10c41a6c2fc3d32255fff3413e1ce197997a7ba9d5578d4f0d/GitPython-3.0.0.tar.gz", hash = "sha256:629867ebf609cef21bb9d849039e281e25963fb7d714a2f6bacc1ecce4800293", size = 431467, upload-time = "2019-08-12T03:19:40.034Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/33/f6/354ae6491228b5eb40e10d89c4d13c651fe1cf7556e35ebdded50cff57ce/gitpython-3.1.50.tar.gz", hash = "sha256:80da2d12504d52e1f998772dc5baf6e553f8d2fcfe1fcc226c9d9a2ee3372dcc", size = 219798, upload-time = "2026-05-06T04:01:26.571Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/f6/b44846937803bfa63eb5c2aaaffe0d1d424365c3122761bc3c4de45aec3a/GitPython-3.0.0-py3-none-any.whl", hash = "sha256:556b64796c5e268b35e3b431a429e813ad54aa178e1baaec2a9ba82e8575a89e", size = 452909, upload-time = "2019-08-12T03:19:35.029Z" },
+    { url = "https://files.pythonhosted.org/packages/20/7a/1c6e3562dfd8950adbb11ffbc65d21e7c89d01a6e4f137fa981056de25c5/gitpython-3.1.50-py3-none-any.whl", hash = "sha256:d352abe2908d07355014abdd21ddf798c2a961469239afec4962e9da884858f9", size = 212507, upload-time = "2026-05-06T04:01:23.799Z" },
 ]
 
 [[package]]
@@ -959,7 +936,7 @@ generation = [
 
 [package.metadata]
 requires-dist = [
-    { name = "gitpython", specifier = "==3.0.0" },
+    { name = "gitpython", specifier = "==3.1.50" },
     { name = "jsonschema", specifier = "==4.26.0" },
     { name = "pydantic", specifier = "==2.13.4" },
     { name = "pyyaml", specifier = "==6.0.3" },
