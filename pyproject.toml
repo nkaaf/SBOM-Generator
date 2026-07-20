@@ -12,7 +12,7 @@ maintainers = [
 license-files = ["LICENSE"]
 requires-python = ">=3.10,<3.15"
 dependencies = [
-    "gitpython==3.1.52",
+    "gitpython==3.1.53",
     "jsonschema==4.26.0",
     "pydantic==2.13.4",
     "pyyaml==6.0.3",
@@ -49,21 +49,21 @@ sbom-generator = "sbom_generator.main:app"
 
 [dependency-groups]
 build = [
-    "uv-build==0.11.29",
+    "uv-build==0.11.30",
 ]
 generation = [
-    "datamodel-code-generator==0.68.1",
+    "datamodel-code-generator==0.69.0",
 ]
 dev = [
     "ruff==0.15.22",
-    "ty==0.0.60",
-    "uv==0.11.29",
+    "ty==0.0.61",
+    "uv==0.11.30",
     { include-group = "build" },
     { include-group = "generation" },
 ]
 
 [build-system]
-requires = ["uv_build==0.11.29"]
+requires = ["uv_build==0.11.30"]
 build-backend = "uv_build"
 
 [tool.uv]
