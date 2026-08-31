@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@cyclonedx/cyclonedx-esbuild": "1.4.3"
+    "@cyclonedx/cyclonedx-esbuild": "1.4.4"
   }
 }
