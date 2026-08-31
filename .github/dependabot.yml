@@ -9,15 +9,23 @@ updates:
       devcontainers-dependencies:
         patterns:
           - "*"
-  
-  - package-ecosystem: uv
+
+  - package-ecosystem: "uv"
     directory: "/"
     schedule:
-      interval: daily
+      interval: "weekly"
+
     groups:
-      python-dependencies:
+      datamodel-code-generator:
+        patterns:
+          - "datamodel-code-generator"
+
+      other-dependencies:
+        exclude-patterns:
+          - "datamodel-code-generator"
         patterns:
           - "*"
+
 
   - package-ecosystem: npm
     directory: "/src/sbom_generator/deps/npm"
