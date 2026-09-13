@@ -52,7 +52,7 @@ build = [
     "uv-build==0.12.12",
 ]
 generation = [
-    "datamodel-code-generator==0.68.1",
+    "datamodel-code-generator==0.78.0",
 ]
 dev = [
     "ruff==0.16.6",
