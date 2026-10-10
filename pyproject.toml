@@ -16,7 +16,7 @@ dependencies = [
     "jsonschema==4.26.0",
     "pydantic==2.13.5",
     "pyyaml==6.0.3",
-    "typer==0.27.2",
+    "typer==0.27.3",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -49,21 +49,21 @@ sbom-generator = "sbom_generator.main:app"
 
 [dependency-groups]
 build = [
-    "uv-build==0.12.21",
+    "uv-build==0.12.23",
 ]
 generation = [
     "datamodel-code-generator==0.68.1",
 ]
 dev = [
-    "ruff==0.16.9",
-    "ty==0.0.84",
-    "uv==0.12.21",
+    "ruff==0.16.10",
+    "ty==0.0.85",
+    "uv==0.12.23",
     { include-group = "build" },
     { include-group = "generation" },
 ]
 
 [build-system]
-requires = ["uv_build==0.12.21"]
+requires = ["uv_build==0.12.23"]
 build-backend = "uv_build"
 
 [tool.uv]
