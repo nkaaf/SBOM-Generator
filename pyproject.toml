@@ -57,7 +57,7 @@ generation = [
 dev = [
     "ruff==0.17.0",
     "ty==0.0.87",
-    "uv==0.13.1",
+    "uv==0.13.4",
     { include-group = "build" },
     { include-group = "generation" },
 ]
