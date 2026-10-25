@@ -110,7 +110,7 @@ wheels = [
 
 [[package]]
 name = "datamodel-code-generator"
-version = "0.68.1"
+version = "0.81.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "argcomplete" },
@@ -122,10 +122,11 @@ dependencies = [
     { name = "pydantic" },
     { name = "pyyaml" },
     { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8c/9d/9746c36d7b597235dae8806696fc158fa41a3f78912499f6cfebeb2b7833/datamodel_code_generator-0.68.1.tar.gz", hash = "sha256:3a9f0c501670b35d6ea1764b3ff6c552f1f594c7ee3ed9cab5b3b72f75ff092d", size = 1577260, upload-time = "2026-07-08T00:47:56.697Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/41/a1/87deb406ca27b0ae25cda946940208dfe2a2953b7fef20f8a968746e6b36/datamodel_code_generator-0.81.0.tar.gz", hash = "sha256:3b4d1639cc7430f7e34fddc3827fb5d3eb0a4f5394750890c46ba2a9d56e3ee2", size = 2912162, upload-time = "2026-09-14T00:05:20.43Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f7/ed/03aab13a7b425a816f61c580fc9fb7ad8902fb4839a205dfb2e69a43fdd7/datamodel_code_generator-0.68.1-py3-none-any.whl", hash = "sha256:2784ad944f25579be874d40e7f28ee5e7ab2d4457a08612393c7fd02ea7b7f21", size = 425059, upload-time = "2026-07-08T00:47:54.903Z" },
+    { url = "https://files.pythonhosted.org/packages/84/30/acea9e8d4c5e7819c10b25581accfa805e5368ec564fc210c8f4c4ffd666/datamodel_code_generator-0.81.0-py3-none-any.whl", hash = "sha256:82ff0c295685065a83c530ce42ec03fc75b7ca01e72083eb8232d68f7637013a", size = 721675, upload-time = "2026-09-14T00:05:18.451Z" },
 ]
 
 [[package]]
@@ -947,13 +948,13 @@ requires-dist = [
 [package.metadata.requires-dev]
 build = [{ name = "uv-build", specifier = "==0.13.4" }]
 dev = [
-    { name = "datamodel-code-generator", specifier = "==0.68.1" },
+    { name = "datamodel-code-generator", specifier = "==0.81.0" },
     { name = "ruff", specifier = "==0.17.1" },
     { name = "ty", specifier = "==0.0.90" },
     { name = "uv", specifier = "==0.13.4" },
     { name = "uv-build", specifier = "==0.13.4" },
 ]
-generation = [{ name = "datamodel-code-generator", specifier = "==0.68.1" }]
+generation = [{ name = "datamodel-code-generator", specifier = "==0.81.0" }]
 
 [[package]]
 name = "shellingham"
