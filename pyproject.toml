@@ -10,7 +10,7 @@ maintainers = [
     { name = "Niklas Kaaf", email = "nkaaf@protonmail.com" }
 ]
 license-files = ["LICENSE"]
-requires-python = ">=3.10,<3.15"
+requires-python = ">=3.11,<=3.15"
 dependencies = [
     "gitpython==3.2.1",
     "jsonschema==4.26.0",
@@ -48,17 +48,12 @@ issues = "https://github.com/nkaaf/SBOM-Generator/issues"
 sbom-generator = "sbom_generator.main:app"
 
 [dependency-groups]
-build = [
-    "uv-build==0.13.6",
-]
 generation = [
     "datamodel-code-generator==0.87.0",
 ]
 dev = [
     "ruff==0.17.3",
     "ty==0.0.94",
-    "uv==0.13.6",
-    { include-group = "build" },
     { include-group = "generation" },
 ]
 
@@ -97,5 +92,5 @@ formatters = ["ruff-format"]
 input = "src/sbom_generator/schemas/generation-1.schema.json"
 input_file_type = "jsonschema"
 output = "src/sbom_generator/models/configuration.py"
-preset = "practical-py310-20260619"
+preset = "practical-py311-20261027"
 collapse_reuse_models = false
