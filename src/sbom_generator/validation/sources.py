@@ -2,7 +2,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Final
 
-from sbom_generator.models import SourceGit, SourceLocal, SourceType
+from sbom_generator.models import SourceLocal, SourceType
 
 __all__ = ['validate_source']
 
@@ -18,16 +18,13 @@ def validate_source(sources: list[SourceType], config_dir: Path) -> None:
     for source in sources:
         if isinstance(source, SourceLocal):
             path: Final = config_dir / source.path
-        elif isinstance(source, SourceGit):
-            path: Final = config_dir / source.clone_dir
         else:
-            path: Final = None
+            path: Final = config_dir / source.clone_dir
 
-        if path is not None:
-            if path.exists() and not path.is_dir():
-                msg: Final = f"Path '{path.absolute()!s}' is not a valid directory."
-                raise ValueError(msg)
-            paths.append(path.resolve())
+        if path.exists() and not path.is_dir():
+            msg: Final = f"Path '{path.absolute()!s}' is not a valid directory."
+            raise ValueError(msg)
+        paths.append(path.resolve())
 
     if len(paths) != len(set(paths)):
         msg: Final = f"Multiple equal source paths found: '{[str(k.absolute().resolve()) for k, v in Counter(paths).items() if v > 1]}'"

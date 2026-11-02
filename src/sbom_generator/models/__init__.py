@@ -1,12 +1,13 @@
 from typing import TypeAlias
 
 from .configuration import (
-    SBOMGenerationConfig as Configuration, TargetEsbuild,
+    SBOMGenerationConfig as Configuration,
 )
 from .configuration import (
     SourceBase,
     SourceGit,
     SourceLocal,
+    TargetEsbuild,
     TargetNPM,
     TargetRuby,
     TargetYarn,

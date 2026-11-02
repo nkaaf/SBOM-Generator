@@ -19,6 +19,7 @@ targets:
       includeDev: false
       path: "./package.json"
       mainType: application
+      lockOnly: false
 
   - id: "committee-dev"
     type: yarn
@@ -31,3 +32,30 @@ targets:
       includeDev: true
       path: "./package.json"
       mainType: application
+      lockOnly: false
+
+  - id: "committee-lock"
+    type: yarn
+    sourceId: "committee"
+    generation:
+      outputPath: "../sboms/committee-lock.cdx.json"
+      format: json
+      specVersion: "1.7"
+    options:
+      includeDev: false
+      path: "./package.json"
+      mainType: application
+      lockOnly: true
+
+  - id: "committee-dev-lock"
+    type: yarn
+    sourceId: "committee"
+    generation:
+      outputPath: "../sboms/committee-dev-lock.cdx.json"
+      format: json
+      specVersion: "1.7"
+    options:
+      includeDev: true
+      path: "./package.json"
+      mainType: application
+      lockOnly: true
