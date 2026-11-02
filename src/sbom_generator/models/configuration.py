@@ -2,9 +2,11 @@
 #   filename:  generation-1.schema.json
 
 from __future__ import annotations
-from typing import Annotated, Literal
-from pydantic import BaseModel, ConfigDict, Field
+
 from enum import Enum, StrEnum
+from typing import Annotated, Literal
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class SourceBase(BaseModel):
@@ -287,6 +289,8 @@ class OptionsYarn(BaseModel):
     )
     path: Annotated[str, Field(min_length=1)]
     """The path of the 'package.json' manifest, relative to source (root) path."""
+    lock_only: Annotated[bool, Field(alias='lockOnly')]
+    """Use only the 'yarn.lock' lockfile."""
     include_dev: Annotated[bool, Field(alias='includeDev')]
     main_type: Annotated[MainType, Field(alias='mainType')]
 

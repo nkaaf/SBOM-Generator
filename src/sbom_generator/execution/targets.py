@@ -9,10 +9,11 @@ from sbom_generator.models import (
     SourceGit,
     SourceLocal,
     SourceType,
+    TargetEsbuild,
     TargetNPM,
     TargetRuby,
     TargetType,
-    TargetYarn, TargetEsbuild,
+    TargetYarn,
 )
 
 from .sources import execute_source
@@ -47,8 +48,8 @@ def _execute_target_npm(
         if node_modules_dir.is_dir():
             shutil.rmtree(node_modules_dir)
 
-        subprocess.check_call(
-            [
+        subprocess.check_call(  # noqa: S603
+            [  # noqa: S607
                 'npm',
                 'install',
                 '.',
@@ -67,13 +68,13 @@ def _execute_target_npm(
         )
 
         subprocess.check_call(
-            ['npm', 'install'],
+            ['npm', 'install'],  # noqa: S607
             cwd=tmpdir,
             stdout=subprocess.DEVNULL,
         )
 
-        subprocess.check_call(
-            [
+        subprocess.check_call(  # noqa: S603
+            [  # noqa: S607
                 'npx',
                 '--',
                 '@cyclonedx/cyclonedx-npm',
@@ -101,7 +102,6 @@ def _execute_target_npm(
                 ),  # Resolve, for understandable output logging
                 '--validate',
                 *(['--mc-type', target.options.main_type.value]),
-                '--verbose',
                 '--',
                 manifest_path,
             ],
@@ -113,13 +113,11 @@ def _execute_target_npm(
 def _execute_target_yarn(
     target: TargetYarn, source: SourceType, config_dir: Path
 ) -> None:
-    assert isinstance(source, (SourceGit, SourceLocal))
-
     if isinstance(source, SourceGit):
         source_path: Final = config_dir / source.clone_dir
     else:
         source_path: Final = config_dir / source.path
-    manifest_path = source_path / target.options.path
+    manifest_path: Final = source_path / target.options.path
 
     if not manifest_path.is_file():
         msg: Final = f"Configured manifest '{manifest_path!s}' in target '{target.id}' with source '{source.id}' is not an existing file!"
@@ -133,16 +131,17 @@ def _execute_target_yarn(
     if dot_yarn_dir.is_dir():
         shutil.rmtree(dot_yarn_dir)
 
-    subprocess.check_call(
-        ['corepack', 'prepare', 'yarn@stable', '--activate'],
-        cwd=manifest_path.parent,
-        stdout=subprocess.DEVNULL,
-    )
-    subprocess.check_call(
-        ['yarn', 'install'],
-        cwd=manifest_path.parent,
-        stdout=subprocess.DEVNULL,
-    )
+    if not target.options.lock_only:
+        subprocess.check_call(
+            ['corepack', 'prepare', 'yarn@stable', '--activate'],  # noqa: S607
+            cwd=manifest_path.parent,
+            stdout=subprocess.DEVNULL,
+        )
+        subprocess.check_call(
+            ['yarn', 'install'],  # noqa: S607
+            cwd=manifest_path.parent,
+            stdout=subprocess.DEVNULL,
+        )
 
     with TemporaryDirectory() as tmpdir:
         shutil.copy(
@@ -151,12 +150,12 @@ def _execute_target_yarn(
         )
 
         subprocess.check_call(
-            ['corepack', 'prepare', 'yarn@stable', '--activate'],
+            ['corepack', 'prepare', 'yarn@stable', '--activate'],  # noqa: S607
             cwd=tmpdir,
             stdout=subprocess.DEVNULL,
         )
         subprocess.check_call(
-            ['yarn', 'install'],
+            ['yarn', 'install'],  # noqa: S607
             cwd=tmpdir,
             stdout=subprocess.DEVNULL,
         )
@@ -169,7 +168,7 @@ def _execute_target_yarn(
         exec_file: Final = _find_file(Path(tmpdir), 'cyclonedx-yarn-cli.js')
         assert exec_file is not None
 
-        subprocess.check_call(
+        subprocess.check_call(  # noqa: S603
             [
                 exec_file,
                 *(['--production'] if not target.options.include_dev else []),
@@ -187,7 +186,7 @@ def _execute_target_yarn(
                     ]
                 ),  # Resolve, for understandable output logging
                 *(['--mc-type', target.options.main_type.value]),
-                '--verbose',
+                *(['--lockfile-only'] if target.options.lock_only else []),
             ],
             cwd=manifest_path.parent,
             stdout=subprocess.DEVNULL,
@@ -210,7 +209,7 @@ def _execute_target_ruby(
         raise ValueError(msg)
 
     subprocess.check_call(
-        ['bundle', 'install'],
+        ['bundle', 'install'],  # noqa: S607
         cwd=manifest_path.parent,
         stdout=subprocess.DEVNULL,
     )
@@ -222,16 +221,15 @@ def _execute_target_ruby(
         )
 
         subprocess.check_call(
-            ['bundle', 'install', '--gemfile', 'Gemfile'],
+            ['bundle', 'install', '--gemfile', 'Gemfile'],  # noqa: S607
             cwd=tmpdir,
             stdout=subprocess.DEVNULL,
         )
 
-        subprocess.check_call(
-            [
+        subprocess.check_call(  # noqa: S603
+            [  # noqa: S607
                 'cyclonedx-ruby',
                 *(['--path', '.']),
-                '--verbose',
             ],
             cwd=manifest_path.parent,
             stdout=subprocess.DEVNULL,
@@ -248,8 +246,6 @@ def _execute_target_ruby(
 def _execute_target_esbuild(
     target: TargetEsbuild, source: SourceType, config_dir: Path
 ) -> None:
-    assert isinstance(source, (SourceGit, SourceLocal))
-
     if isinstance(source, SourceGit):
         source_path: Final = config_dir / source.clone_dir
     else:
@@ -260,11 +256,11 @@ def _execute_target_esbuild(
         msg: Final = f"Configured metadata file '{manifest_path!s}' in target '{target.id}' with source '{source.id}' is not an existing file!"
         raise ValueError(msg)
 
-    #if not target.options.lock_only:
+    # if not target.options.lock_only:
     #    node_modules_dir: Final = manifest_path.parent / 'node_modules'
     #    if node_modules_dir.is_dir():
     #        shutil.rmtree(node_modules_dir)
-#
+    #
     #    subprocess.check_call(
     #        [
     #            'npm',
@@ -285,17 +281,17 @@ def _execute_target_esbuild(
         )
 
         subprocess.check_call(
-            ['npm', 'install'],
+            ['npm', 'install'],  # noqa: S607
             cwd=tmpdir,
             stdout=subprocess.DEVNULL,
         )
 
-        subprocess.check_call(
-            [
+        subprocess.check_call(  # noqa: S603
+            [  # noqa: S607
                 'npx',
                 '--',
                 'cyclonedx-esbuild',
-                *(["--build-working-dir", manifest_path.parent]),
+                *(['--build-working-dir', manifest_path.parent]),
                 *(['--spec-version', target.generation.spec_version.value]),
                 '--output-reproducible',
                 *(
@@ -310,7 +306,6 @@ def _execute_target_esbuild(
                 ),  # Resolve, for understandable output logging
                 '--validate',
                 *(['--mc-type', target.options.main_type.value]),
-                '--verbose',
                 '--',
                 manifest_path,
             ],
@@ -333,5 +328,5 @@ def execute_targets(
             _execute_target_yarn(target, source, config_dir)
         elif isinstance(target, TargetRuby):
             _execute_target_ruby(target, source, config_dir)
-        elif isinstance(target, TargetEsbuild):
+        else:
             _execute_target_esbuild(target, source, config_dir)
