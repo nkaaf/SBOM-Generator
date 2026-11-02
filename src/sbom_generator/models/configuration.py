@@ -4,7 +4,7 @@
 from __future__ import annotations
 from typing import Annotated, Literal
 from pydantic import BaseModel, ConfigDict, Field
-from enum import Enum
+from enum import Enum, StrEnum
 
 
 class SourceBase(BaseModel):
@@ -35,59 +35,7 @@ class SourceLocal(SourceBase):
     """Relative path to directory of configuration file."""
 
 
-class MainType(Enum):
-    application = 'application'
-    firmware = 'firmware'
-    library = 'library'
-
-
-class Options(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-        populate_by_name=True,
-    )
-    path: Annotated[str, Field(min_length=1)]
-    """The path of the 'package.json' manifest, relative to source (root) path."""
-    lock_only: Annotated[bool, Field(alias='lockOnly')]
-    """Use only the 'npm-shrinkwrap.json' or 'package-lock.json' lockfiles."""
-    include_dev: Annotated[bool, Field(alias='includeDev')]
-    include_optional: Annotated[bool, Field(alias='includeOptional')]
-    include_peer: Annotated[bool, Field(alias='includePeer')]
-    flatten: bool
-    main_type: Annotated[MainType, Field(alias='mainType')]
-
-
-class Options1(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-        populate_by_name=True,
-    )
-    path: Annotated[str, Field(min_length=1)]
-    """The path of the 'package.json' manifest, relative to source (root) path."""
-    include_dev: Annotated[bool, Field(alias='includeDev')]
-    main_type: Annotated[MainType, Field(alias='mainType')]
-
-
-class Options2(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-        populate_by_name=True,
-    )
-    path: Annotated[str, Field(min_length=1)]
-    """The path of the 'Gemfile' manifest, relative to source (root) path."""
-
-
-class Options3(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-        populate_by_name=True,
-    )
-    path: Annotated[str, Field(min_length=1)]
-    """The path of the esbuild-compatible metadata file, relative to source (root) path."""
-    main_type: Annotated[MainType, Field(alias='mainType')]
-
-
-class SpecVersion(str, Enum):
+class SpecVersion(StrEnum):
     field_1_0 = '1.0'
     field_1_1 = '1.1'
     field_1_2 = '1.2'
@@ -108,7 +56,7 @@ class GenerationOptionsBase1(BaseModel):
     spec_version: Annotated[SpecVersion, Field(alias='specVersion')]
 
 
-class SpecVersion1(str, Enum):
+class SpecVersion1(StrEnum):
     field_1_2 = '1.2'
     field_1_3 = '1.3'
     field_1_4 = '1.4'
@@ -127,7 +75,7 @@ class GenerationOptionsBase2(BaseModel):
     spec_version: Annotated[SpecVersion1, Field(alias='specVersion')]
 
 
-class SpecVersion2(str, Enum):
+class SpecVersion2(StrEnum):
     field_1_3 = '1.3'
     field_1_4 = '1.4'
     field_1_5 = '1.5'
@@ -157,12 +105,12 @@ class GenerationOptionsNPM3(GenerationOptionsBase3):
     pass
 
 
-class Format(str, Enum):
+class Format(StrEnum):
     json = 'json'
     xml = 'xml'
 
 
-class SpecVersion6(str, Enum):
+class SpecVersion6(StrEnum):
     field_1_2 = '1.2'
     field_1_3 = '1.3'
     field_1_4 = '1.4'
@@ -310,20 +258,56 @@ class GenerationOptionsEsbuild7(GenerationOptionsEsbuild3, GenerationOptionsEsbu
     )
 
 
-class OptionsNPM(Options):
-    pass
+class MainType(Enum):
+    application = 'application'
+    firmware = 'firmware'
+    library = 'library'
 
 
-class OptionsYarn(Options1):
-    pass
+class OptionsNPM(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        populate_by_name=True,
+    )
+    path: Annotated[str, Field(min_length=1)]
+    """The path of the 'package.json' manifest, relative to source (root) path."""
+    lock_only: Annotated[bool, Field(alias='lockOnly')]
+    """Use only the 'npm-shrinkwrap.json' or 'package-lock.json' lockfiles."""
+    include_dev: Annotated[bool, Field(alias='includeDev')]
+    include_optional: Annotated[bool, Field(alias='includeOptional')]
+    include_peer: Annotated[bool, Field(alias='includePeer')]
+    flatten: bool
+    main_type: Annotated[MainType, Field(alias='mainType')]
 
 
-class OptionsRuby(Options2):
-    pass
+class OptionsYarn(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        populate_by_name=True,
+    )
+    path: Annotated[str, Field(min_length=1)]
+    """The path of the 'package.json' manifest, relative to source (root) path."""
+    include_dev: Annotated[bool, Field(alias='includeDev')]
+    main_type: Annotated[MainType, Field(alias='mainType')]
 
 
-class OptionsEsbuild(Options3):
-    pass
+class OptionsRuby(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        populate_by_name=True,
+    )
+    path: Annotated[str, Field(min_length=1)]
+    """The path of the 'Gemfile' manifest, relative to source (root) path."""
+
+
+class OptionsEsbuild(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        populate_by_name=True,
+    )
+    path: Annotated[str, Field(min_length=1)]
+    """The path of the esbuild-compatible metadata file, relative to source (root) path."""
+    main_type: Annotated[MainType, Field(alias='mainType')]
 
 
 class TargetBase(BaseModel):
@@ -344,7 +328,7 @@ class TargetNPM(TargetBase):
     )
     type: Literal['npm']
     generation: GenerationOptionsNPM5 | GenerationOptionsNPM6 | GenerationOptionsNPM7
-    options: Options
+    options: OptionsNPM
 
 
 class TargetYarn(TargetBase):
@@ -353,7 +337,7 @@ class TargetYarn(TargetBase):
     )
     type: Literal['yarn']
     generation: GenerationOptionsYarn5 | GenerationOptionsYarn6 | GenerationOptionsYarn7
-    options: Options1
+    options: OptionsYarn
 
 
 class TargetRuby(TargetBase):
@@ -362,7 +346,7 @@ class TargetRuby(TargetBase):
     )
     type: Literal['ruby']
     generation: GenerationOptionsRuby5 | GenerationOptionsRuby6 | GenerationOptionsRuby7
-    options: Options2
+    options: OptionsRuby
 
 
 class TargetEsbuild(TargetBase):
@@ -375,7 +359,7 @@ class TargetEsbuild(TargetBase):
         | GenerationOptionsEsbuild6
         | GenerationOptionsEsbuild7
     )
-    options: Options3
+    options: OptionsEsbuild
 
 
 class SBOMGenerationConfig(BaseModel):
