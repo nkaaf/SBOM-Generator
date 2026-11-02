@@ -4,7 +4,7 @@
 from __future__ import annotations
 from typing import Annotated, Literal
 from pydantic import BaseModel, ConfigDict, Field
-from enum import Enum
+from enum import Enum, StrEnum
 
 
 class SourceBase(BaseModel):
@@ -35,7 +35,7 @@ class SourceLocal(SourceBase):
     """Relative path to directory of configuration file."""
 
 
-class SpecVersion(str, Enum):
+class SpecVersion(StrEnum):
     field_1_0 = '1.0'
     field_1_1 = '1.1'
     field_1_2 = '1.2'
@@ -56,7 +56,7 @@ class GenerationOptionsBase1(BaseModel):
     spec_version: Annotated[SpecVersion, Field(alias='specVersion')]
 
 
-class SpecVersion1(str, Enum):
+class SpecVersion1(StrEnum):
     field_1_2 = '1.2'
     field_1_3 = '1.3'
     field_1_4 = '1.4'
@@ -75,7 +75,7 @@ class GenerationOptionsBase2(BaseModel):
     spec_version: Annotated[SpecVersion1, Field(alias='specVersion')]
 
 
-class SpecVersion2(str, Enum):
+class SpecVersion2(StrEnum):
     field_1_3 = '1.3'
     field_1_4 = '1.4'
     field_1_5 = '1.5'
@@ -105,12 +105,12 @@ class GenerationOptionsNPM3(GenerationOptionsBase3):
     pass
 
 
-class Format(str, Enum):
+class Format(StrEnum):
     json = 'json'
     xml = 'xml'
 
 
-class SpecVersion6(str, Enum):
+class SpecVersion6(StrEnum):
     field_1_2 = '1.2'
     field_1_3 = '1.3'
     field_1_4 = '1.4'
