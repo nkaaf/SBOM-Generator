@@ -53,12 +53,12 @@ generation = [
 ]
 dev = [
     "ruff==0.17.3",
-    "ty==0.0.95",
+    "ty==0.0.97",
     { include-group = "generation" },
 ]
 
 [build-system]
-requires = ["uv_build==0.13.6"]
+requires = ["uv_build==0.13.7"]
 build-backend = "uv_build"
 
 [tool.uv]
