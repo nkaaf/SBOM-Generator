@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@cyclonedx/cyclonedx-npm": "6.0.1"
+    "@cyclonedx/cyclonedx-npm": "7.0.0"
   }
 }
