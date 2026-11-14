@@ -14,9 +14,9 @@ requires-python = ">=3.11,<=3.15"
 dependencies = [
     "gitpython==3.2.1",
     "jsonschema==4.26.0",
-    "pydantic==2.14.2",
+    "pydantic==2.14.3",
     "pyyaml==6.0.3",
-    "typer==0.27.3",
+    "typer==0.29.1",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -52,13 +52,13 @@ generation = [
     "datamodel-code-generator==0.87.0",
 ]
 dev = [
-    "ruff==0.17.3",
-    "ty==0.0.95",
+    "ruff==0.17.4",
+    "ty==0.0.101",
     { include-group = "generation" },
 ]
 
 [build-system]
-requires = ["uv_build==0.13.6"]
+requires = ["uv_build==0.13.7"]
 build-backend = "uv_build"
 
 [tool.uv]
